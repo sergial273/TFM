@@ -2,7 +2,7 @@
 
 ## Visión General
 
-Este repositorio contiene una comparación exhaustiva de diferentes enfoques para la detección de spam en emails, que van desde algoritmos tradicionales de machine learning hasta arquitecturas avanzadas de deep learning.
+Este repositorio contiene una comparación exhaustiva de diferentes enfoques para la detección de spam en emails, incluyendo algoritmos tradicionales de machine learning, arquitecturas de deep learning y modelos avanzados de lenguaje (LLMs) como BERT.
 
 ### Componentes Clave:
 
@@ -19,6 +19,11 @@ Este repositorio contiene una comparación exhaustiva de diferentes enfoques par
    - Implementa 3 arquitecturas neuronales (LSTM, RNN, MLP)
    - Optimización con Optuna
 
+4. **Enfoque con Modelos de Lenguaje (LLM)** ([`spam_con_LLM.ipynb`](spam_con_LLM.ipynb)):
+   - Implementación con BERT (bert-base-uncased)
+   - Fine-tuning para clasificación binaria
+   - Evaluación comparativa
+
 ## Conjuntos de Datos
 
 Se utilizan cuatro conjuntos de datos públicos combinados:
@@ -31,26 +36,53 @@ El dataset combinado contiene:
 - Total de emails: 51709
 - Proporción de spam: 42,38% (21916)
 - Proporción de ham: 57,62% (29793)
+
 ## Resultados y Análisis
 
-Las métricas de rendimiento (exactitud, precisión, recall, F1-score) y visualizaciones (matrices de confusión, curvas ROC, gráficos de pérdida) para todos los modelos están disponibles en la carpeta [resultados](resultados/), organizadas por enfoque (ML/DL).
+### Hallazgos Clave
 
-Hallazgos clave (FALTA RELLENAR):
-- Mejor modelo ML: [Nombre del Modelo] con [Exactitud]% de precisión
-- Mejor modelo DL: [Nombre del Modelo] con [Exactitud]% de precisión
-- Comparación de requisitos computacionales y tiempo de entrenamiento
+**Machine Learning Tradicional:**
+- **Mejor modelo:** SVM optimizado con kernel RBF
+  - Accuracy: 97.38%
+  - F1-score: 0.98
+  - AUC-ROC: 0.996
+- **Otros modelos destacados:**
+  - Regresión Logística (Accuracy: 96.47%)
+  - Bosque Aleatorio (Accuracy: 96.30%)
+
+**Deep Learning:**
+- **Mejor modelo:** MLP (Multilayer Perceptron)
+  - Accuracy: 96.36%
+  - Recall: 99%
+  - F1-score: 0.97
+  - AUC-ROC: 0.993
+- **Comparativa de arquitecturas:**
+  - LSTM: Accuracy 96.16%
+  - RNN: Accuracy 94.79%
+
+**Modelos de Lenguaje (LLM):**
+- **BERT:**
+  - Accuracy: 98.20%
+  - Precision: 0.98
+  - Recall: 0.99
+  - F1-score: 0.98
+  - AUC-ROC: 1.00
+
+**Comparativa general:**
+1. BERT (LLM) - Mejor rendimiento global pero mayor coste computacional
+2. SVM (ML) - Excelente equilibrio rendimiento/eficiencia
+3. MLP (DL) - Buen rendimiento, especialmente en recall
+
+Las métricas de rendimiento completas y visualizaciones (matrices de confusión, curvas ROC) para todos los modelos están disponibles en la carpeta [resultados](resultados/), organizadas por enfoque (ML/DL/LLM)
 
 ## Cómo Usar
 
 ### Prerrequisitos
 - Python 3.8+
-- Paquetes requeridos:
-  - pandas
-  - scikit-learn
-  - torch
-  - tensorflow/keras
-  - nltk
-  - matplotlib
+- Paquetes requeridos (ver [`requerimientos.txt`](requerimientos.txt)):
+  - pandas, scikit-learn, torch, transformers
+  - tensorflow/keras, nltk, matplotlib
+  - optuna (para optimización de hiperparámetros)
 
 ### Instalación
 1. Clona el repositorio:
@@ -75,16 +107,27 @@ Hallazgos clave (FALTA RELLENAR):
 
 - Luego spam_con_DL.ipynb para enfoques de deep learning
 
+- Por último, spam_con_LLM.ipynb para enfoques de LLM
+
 ## Estructura del Proyecto
 ```
 TFM/
 ├── datasets/                  # Archivos de datasets crudos
+│   ├── enron_spam_data.csv
+│   ├── huggingface_test.csv
+│   ├── huggingface_train.csv
+│   ├── spam.csv
+│   └── spamassassin.csv
 ├── resultados/                # Visualizaciones de resultados
 │   ├── DL/                    # Resultados de deep learning
+│   ├── LLM/                   # Resultados con BERT
 │   └── ML/                    # Resultados de machine learning
 ├── spam_con_DL.ipynb          # Implementación de deep learning
+├── spam_con_LLM.ipynb         # Implementación con BERT
 ├── spam_con_ML.ipynb          # Implementación de machine learning
-└── tratarDatos.py             # Módulo de preprocesamiento
+├── tratarDatos.py             # Módulo de preprocesamiento
+├── README.md                  # Este archivo
+└── requerimientos.txt         # Dependencias
 ```
 
 ## Contribuciones y Feedback
